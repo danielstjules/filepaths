@@ -1,0 +1,22 @@
+{
+  "name": "node-filepaths",
+  "version": "0.0.1",
+  "description": "Get paths to all files in dirs/subdirs",
+  "keywords": [
+    "paths",
+    "files",
+    "dirs",
+    "recursive"
+  ],
+  "author": "Daniel St. Jules <danielst.jules@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/danielstjules/node-filepaths",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/danielstjules/node-filepaths.git"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "file": "0.2.2"
+  }
+}
