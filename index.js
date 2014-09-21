@@ -9,7 +9,9 @@ exports.getSync = function(paths, opts) {
   opts = opts || {};
 
   paths.forEach(function(path) {
-    if (fs.statSync(path).isFile()) {
+    if (!fs.existsSync(path)) {
+      throw new Error('No such file or directory: ' + path);
+    } else if (fs.statSync(path).isFile()) {
       return results.push(path);
     }
 
