@@ -3,10 +3,18 @@ var fs   = require('fs');
 var file = require('file');
 
 exports.getSync = function(paths, opts) {
-  var results = [];
+  var results, ignorePatterns, i;
 
   paths = paths || [];
   opts = opts || {};
+  results = [];
+
+  ignorePatterns = [];
+  if (opts.ignore) {
+    for (i = 0; i < opts.ignore.length; i++) {
+      ignorePatterns.push(new RegExp(opts.ignore[i]));
+    }
+  }
 
   paths.forEach(function(path) {
     if (!fs.existsSync(path)) {
@@ -17,9 +25,9 @@ exports.getSync = function(paths, opts) {
 
     file.walkSync(path, function(dirPath, dirs, files) {
       files.forEach(function(file) {
+        var filePath;
+
         if (opts.suffix && file.slice(-opts.suffix.length) !== opts.suffix) {
-          return;
-        } else if (opts.ignore && dirPath.indexOf(opts.ignore) > -1) {
           return;
         }
 
@@ -31,7 +39,13 @@ exports.getSync = function(paths, opts) {
           dirPath = './' + dirPath;
         }
 
-        results.push(dirPath + file);
+        filePath = dirPath + file;
+
+        for (var i = 0; i < ignorePatterns.length; i++) {
+          if (ignorePatterns[i].test(filePath)) return;
+        }
+
+        results.push(filePath);
       });
     });
   });
