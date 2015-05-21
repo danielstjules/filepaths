@@ -1,4 +1,5 @@
-var sep  = require('path').sep;
+var nodePath = require('path');
+var sep  = nodePath.sep;
 var fs   = require('fs');
 var file = require('file');
 
@@ -15,6 +16,14 @@ exports.getSync = function(paths, opts) {
       ignorePatterns.push(new RegExp(opts.ignore[i]));
     }
   }
+  
+  if (opts.suffix) {
+    if (! Array.isArray(opts.suffix)) {
+      opts.suffix = [opts.suffix];
+    }
+  } else {
+    opts.suffix = [];
+  }
 
   paths.forEach(function(path) {
     if (!fs.existsSync(path)) {
@@ -26,8 +35,9 @@ exports.getSync = function(paths, opts) {
     file.walkSync(path, function(dirPath, dirs, files) {
       files.forEach(function(file) {
         var filePath;
+        var ext = nodePath.extname(file);
 
-        if (opts.suffix && file.slice(-opts.suffix.length) !== opts.suffix) {
+        if (opts.suffix.indexOf(ext) === -1) {
           return;
         }
 
