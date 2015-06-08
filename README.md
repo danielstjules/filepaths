@@ -3,6 +3,8 @@ node-filepaths
 
 Get paths to all files in dirs/subdirs
 
+[![Build Status](https://travis-ci.org/danielstjules/node-filepaths.svg?branch=master)](https://travis-ci.org/danielstjules/node-filepaths)
+
 #### getSync(paths, [opts])
 
 Recurses through the supplied paths, returning an array of file paths found
