@@ -1,8 +1,20 @@
-var nodePath = require('path');
-var sep  = nodePath.sep;
-var fs   = require('fs');
-var file = require('file');
+var nodePath = require('path'),
+    sep      = nodePath.sep,
+    fs       = require('fs'),
+    file     = require('file');
 
+/**
+ * Recurses through the supplied paths, returning an array of file paths found
+ * in each. Paths may be a string, or an array of strings. The paths may be
+ * strings pointing to files or directories. Accepts an options object with
+ * the following keys: ignore and ext. opts.ignore takes either a single
+ * string pattern or array of patterns to ignore. opts.ext accepts either
+ * a string, or array of strings corresponding to filename extensions to
+ * retrieve.
+ *
+ * @param {string|string[]} paths The paths to traverse
+ * @param {object}          opts  Options object with ignore and ext keys
+ */
 exports.getSync = function(paths, opts) {
   var results, ignorePatterns, i;
 
@@ -10,19 +22,25 @@ exports.getSync = function(paths, opts) {
   opts = opts || {};
   results = [];
 
+  if (!(paths instanceof Array)) {
+    paths = [paths];
+  }
+
   ignorePatterns = [];
   if (opts.ignore) {
+    if (!(opts.ignore instanceof Array)) {
+      opts.ignore = [opts.ignore];
+    }
+
     for (i = 0; i < opts.ignore.length; i++) {
       ignorePatterns.push(new RegExp(opts.ignore[i]));
     }
   }
-  
-  if (opts.suffix) {
-    if (! Array.isArray(opts.suffix)) {
-      opts.suffix = [opts.suffix];
-    }
-  } else {
-    opts.suffix = [];
+
+  if (!opts.ext) {
+    opts.ext = [];
+  } else if (!(opts.ext instanceof Array)) {
+    opts.ext = [opts.ext];
   }
 
   paths.forEach(function(path) {
@@ -37,7 +55,7 @@ exports.getSync = function(paths, opts) {
         var filePath;
         var ext = nodePath.extname(file);
 
-        if (opts.suffix.indexOf(ext) === -1) {
+        if (opts.ext.length && opts.ext.indexOf(ext) === -1) {
           return;
         }
 
