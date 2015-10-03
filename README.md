@@ -1,9 +1,9 @@
-node-filepaths
+filepaths
 ==============
 
-Get paths to all files in dirs/subdirs
+Get paths to all files in dirs/subdirs in node
 
-[![Build Status](https://travis-ci.org/danielstjules/node-filepaths.svg?branch=master)](https://travis-ci.org/danielstjules/node-filepaths)
+[![Build Status](https://travis-ci.org/danielstjules/filepaths.svg?branch=master)](https://travis-ci.org/danielstjules/filepaths)
 
 #### getSync(paths, [opts])
 

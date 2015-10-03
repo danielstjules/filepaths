@@ -1,5 +1,5 @@
 {
-  "name": "node-filepaths",
+  "name": "filepaths",
   "version": "0.1.0",
   "description": "Get paths to all files in dirs/subdirs",
   "keywords": [
@@ -10,14 +10,14 @@
   ],
   "author": "Daniel St. Jules <danielst.jules@gmail.com>",
   "license": "MIT",
-  "homepage": "https://github.com/danielstjules/node-filepaths",
+  "homepage": "https://github.com/danielstjules/filepaths",
   "repository": {
     "type": "git",
-    "url": "https://github.com/danielstjules/node-filepaths.git"
+    "url": "https://github.com/danielstjules/filepaths.git"
   },
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha -R spec test.js"
+    "test": "mocha -R spec test.js"
   },
   "dependencies": {
     "file": "0.2.2"
