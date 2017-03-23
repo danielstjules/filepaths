@@ -1,6 +1,6 @@
 {
   "name": "filepaths",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Get paths to all files in dirs/subdirs",
   "keywords": [
     "paths",
