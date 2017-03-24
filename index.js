@@ -1,7 +1,6 @@
 var nodePath = require('path'),
     sep      = nodePath.sep,
-    fs       = require('fs'),
-    file     = require('file');
+    fs       = require('fs');
 
 /**
  * Recurses through the supplied paths, returning an array of file paths found
@@ -50,7 +49,7 @@ exports.getSync = function(paths, opts) {
       return results.push(path);
     }
 
-    file.walkSync(path, function(dirPath, dirs, files) {
+    walkSync(path, function(dirPath, dirs, files) {
       files.forEach(function(file) {
         var filePath;
         var ext = nodePath.extname(file);
@@ -79,4 +78,31 @@ exports.getSync = function(paths, opts) {
   });
 
   return results;
+};
+
+function walkSync(dir, fn) {
+  if (!fs.statSync(dir).isDirectory()) {
+    throw new Error(dir + ' is not a directory');
+  }
+
+  var dirs = [];
+  var files = [];
+
+  fs.readdirSync(dir).forEach(function(name) {
+    var stat = fs.lstatSync(nodePath.join(dir, name));
+    // Don't follow symbolic links
+    if (stat.isSymbolicLink()) {
+      return;
+    } else if (stat.isDirectory()) {
+      dirs.push(name);
+    } else {
+      files.push(name);
+    }
+  });
+
+  fn(dir, dirs, files);
+
+  dirs.forEach(function(subdir) {
+    walkSync(nodePath.join(dir, subdir), fn);
+  });
 };
